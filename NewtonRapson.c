@@ -14,7 +14,7 @@
 //Use a estrutura da IEEE-754 para eliminar a multiplicação por 1/2 nas equação de recorrência de Newton-
 //Rapson, bem como para estimar um bom valor para x0.
 
-const float sqrt2 = 1.4142135623730950488016887;
+#define sqrt2 1.4142135623730950488016887;
 const float invsqrt2 = 1/sqrt2;
 const int B = 127;
 
