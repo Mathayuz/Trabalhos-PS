@@ -3,16 +3,11 @@
 #include <stdbool.h>
 #include <math.h>
 
-//Computar a raiz quadrada de um argumento A por meio do uso do método
-//de Newton-Rapson minimizando as multiplicações. Faça uma função C para resolver esse
-//problema e use valores float A entre 50 até 70 com incremento de 1 em 1. Monte uma tabela
-//para mostrar os valores A com a respectiva √A que foi calculada e compare esse resultado
-//com o valor produzido pela função sqrt da biblioteca math.h do C.
-
-//Para minimizar as multiplicações é necessário começar esse processo com valor inicial x0 mais
-//próximo de √A quanto possível.
-//Use a estrutura da IEEE-754 para eliminar a multiplicação por 1/2 nas equação de recorrência de Newton-
-//Rapson, bem como para estimar um bom valor para x0.
+// Computar a raiz quadrada de um argumento A por meio do uso do método
+// de Newton-Rapson minimizando as multiplicações.
+// Montando uma tabela de valores de A de 50 a 70, com incremento de 1,
+// mostrando os valores A com a respectiva √A que foi calculada e comparando esse resultado
+// com o valor produzido pela função sqrt da biblioteca math.h do C.
 
 #define sqrt2 1.4142135623730950488016887;
 const float invsqrt2 = 1/sqrt2;
@@ -21,14 +16,14 @@ const int B = 127;
 typedef union floatIEEE{
     float x; // valor decimal
     struct {
-    // a ordem de definição dos campos é importante}
-    unsigned int f : 23; // 23 bits para a fração damantissa (0.xxx...)
-    unsigned int E : 8; // 8 bits para o expoenteenviezado por B = 127
-    unsigned char s : 1; // 1 bit para o sinal damantissa
+    // a ordem de definição dos campos é importante
+    unsigned int f : 23; // 23 bits para a fração da mantissa (0.xxx...)
+    unsigned int E : 8; // 8 bits para o expoente enviezado por B = 127
+    unsigned char s : 1; // 1 bit para o sinal da mantissa
     }bits;
 }floatIEEE;
 
-void computeSquareRoot(float numero) {
+void computarRaiz(float numero) {
     floatIEEE x1;
     floatIEEE x0 = {numero};
 
@@ -52,15 +47,15 @@ void computeSquareRoot(float numero) {
     x1.bits.E--; // x1.bits.E = x1.bits.E – 1;
     } while (x0.x > x1.x);
 
-    printf("|   A   |   √A (Método)   |   √A (sqrt)   |\n");
-    printf("|-------|-----------------|---------------|\n");
-    printf("| %.2f |     %.6f    |    %.6f   |\n", numero, x0.x, sqrt(numero));
+    printf("|   A   |   raiz(A) (Metodo)   |   raiz(A) (sqrt)   |\n");
+    printf("|-------|----------------------|--------------------|\n");
+    printf("| %.2f |      %.6f        |      %.6f      |\n", numero, x0.x, sqrt(numero));
     printf("\n");
 }
 
 int main() {
     for (float i = 50; i <= 70; i++) {
-        computeSquareRoot(i);
+        computarRaiz(i);
     }
     return 0;
 }
