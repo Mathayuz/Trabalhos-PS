@@ -127,12 +127,12 @@ int main(void)
     x.C = 40;
     x.L = -40;
 
-    push(x, pilha);  /// empilhar x
+    push(x, pilha);   /// empilhar x
     displayLL(pilha); /// mostra pilha
 
     pop(&x, pilha);
     printf("\n Desempilhou ---> %d \n", x);
-   
+
     if (pop(&x, pilha) == -2) /// erro!!!!
         printf("\n ERRO!!! Impossivel desempilhar de PILHA vazia \n");
 
