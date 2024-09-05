@@ -1,7 +1,7 @@
 
 #include <stdio.h>
-#include <string.h> // para usar a fun��o strcmp() que compara duas strings
-#include <stdlib.h> // para usar a fun��o exit() que interrompe (aborta) a execu��o do programa.
+#include <string.h> // para usar a funcao strcmp() que compara duas strings
+#include <stdlib.h> // para usar a funcao exit() que interrompe (aborta) a execucao do programa.
 
 typedef unsigned char Tpixel; // tipo Tpixel para valores em [0, 255]
 
@@ -9,7 +9,7 @@ typedef struct pgm
 {
     int w;         // largura da imagem em pixels (TC - Total de pixels em cada coluna da imagem)
     int h;         // altura da imagem em pixel   (TL - Total de pixels em cada linha da imagem )
-    int max;       // valor de brilho m�ximo registrado na imagem (use 255 sempre)
+    int max;       // valor de brilho maximo registrado na imagem (use 255 sempre)
     Tpixel *pData; // ponteiro para o reticulado (matriz) da immagem alocada como um vetor.
 } pgm;
 
@@ -21,14 +21,14 @@ int WritePGM(const char *arq, const char *tpPGM, pgm *pPgm)
     if (!f)
     {
         printf("\n ERRO: Incapaz de abrir arquivo: %s.", arq);
-        return -1; // algum c�digo de erro - Arquivo nao existe.
+        return -1; // algum codigo de erro - Arquivo nao existe.
     }
 
-    //      //gravar no arquivo o cabe�alho de imagens PGM cinza
+    //      //gravar no arquivo o cabecalho de imagens PGM cinza
 
     fprintf(f, "%s\n", tpPGM);               ///  assinatura PGM cinza "P2" ou binario "P1"
     fprintf(f, "%d %d\n", pPgm->w, pPgm->h); // largura e altura da imagem em pixel
-    fprintf(f, "255\n");                     // valor de brilho m�ximo na imagem (use sempre 255
+    fprintf(f, "255\n");                     // valor de brilho maximo na imagem (use sempre 255
 
     // gravar no arquivo os valores dos pixels da imagem computada
     for (unsigned int k = 0; k < (pPgm->w * pPgm->h); k++)
@@ -41,18 +41,18 @@ int WritePGM(const char *arq, const char *tpPGM, pgm *pPgm)
 
 int ReadPGMP2(const char *arq, pgm *pPgm)
 {
-    // ReadPGMP2 l� uma imagem gravada em arquivo com formato PGM "P2"
-    //      INPUT: arq � uma string que aponta o caminho e o nome do arquivo PGM P2 que vai ser lido.
+    // ReadPGMP2 le uma imagem gravada em arquivo com formato PGM "P2"
+    //      INPUT: arq eh uma string que aponta o caminho e o nome do arquivo PGM P2 que vai ser lido.
     //             exemplo: const char* arq = "D:\\AulasAlgoritimosEstruturas\\ignNIR.pgm";
-    //      OUTPUT: fd retorna o descritor de arquivo (ponteiro) que atuar� como tratador do arquivo arq.
-    //              Se o arquivo arq n�o existir, ou n�o for encontrado no caminho fornecido,  ou n�o for um
-    //              arquivo PGM "P2", a execu��o desta fun��o � abortada e fd e pPgm ficam indefinidos.
-    //              pPgm � um ponteiro para uma struct com campos definidos em pgm, a qual vai armazenar
-    //              dados relevantes que est�o gravados no arquivo PGM arq.
+    //      OUTPUT: fd retorna o descritor de arquivo (ponteiro) que atuara como tratador do arquivo arq.
+    //              Se o arquivo arq nao existir, ou nao for encontrado no caminho fornecido,  ou nao for um
+    //              arquivo PGM "P2", a execucao desta funcao eh abortada e fd e pPgm ficam indefinidos.
+    //              pPgm eh um ponteiro para uma struct com campos definidos em pgm, a qual vai armazenar
+    //              dados relevantes que estao gravados no arquivo PGM arq.
 
-    int word;               // inteiro de prop�sito geral
-    unsigned int nRead = 0; // �ndice para o vetor/matriz de dados (pixels) da imagem
-    char readChars[256];    // buffer para ler caracteres do arquivo (prop�sito geral)
+    int word;               // inteiro de proposito geral
+    unsigned int nRead = 0; // indice para o vetor/matriz de dados (pixels) da imagem
+    char readChars[256];    // buffer para ler caracteres do arquivo (proposito geral)
 
     FILE *fd; /// descritor para um arquivo
 
@@ -61,32 +61,32 @@ int ReadPGMP2(const char *arq, pgm *pPgm)
     if (!fd)
     {
         printf("\n ERRO: Incapaz de abrir arquivo: %s.\n\n", arq);
-        exit(1); // ERRO 1: arquivo inexistente ou n�o encontrado no caminho especificado.
-                 // encerra a execu��o do programa e fecha todos os arquivos abertos
+        exit(1); // ERRO 1: arquivo inexistente ou nao encontrado no caminho especificado.
+                 // encerra a execucao do programa e fecha todos os arquivos abertos
     }
     printf("\n Arquivo '%s' foi aberto", arq);
-    // se o arquivo existe, ele pode ser um PGM. Ent�o,
-    fscanf(fd, "%s", readChars); // leia a primeira linha (string) do arquivo fd cujo valor esperado � "P2"
+    // se o arquivo existe, ele pode ser um PGM. Entao,
+    fscanf(fd, "%s", readChars); // leia a primeira linha (string) do arquivo fd cujo valor esperado eh "P2"
 
     if ((strcmp(readChars, "P2")))
-    { // tipo PGM n�o � v�lido? strcmp(s1,s2) compara os caracteres das
+    { // tipo PGM nao eh valido? strcmp(s1,s2) compara os caracteres das
       //    strings s1 e s2 e retorna o valor zero se s1 � exatamente igual a s2
         printf("\n\nErro em PGM: %s. Formato nao suportado em:  ", readChars);
         fclose(fd);
-        exit(2); // c�digo de erro para "Arquivo n�o � um PGM P2"
+        exit(2); // codigo de erro para "Arquivo nao eh um PGM P2"
     }
     printf("\n ... tem assinatura de arquivo de imagem PGM 'P2'");
-    // o arquivo arq vinculado ao descritor fd tem assinatura PGM "P2", ent�o
+    // o arquivo arq vinculado ao descritor fd tem assinatura PGM "P2", entao
     fscanf(fd, "%s", readChars); // leia a segunda linha
 
     while (readChars[0] == '#')
-    {                              // se no cabe�alho do arquivo existe uma linha de coment�rio,
-        fgets(readChars, 255, fd); // ela come�a com o char "#".
+    {                              // se no cabecalho do arquivo existe uma linha de comentario,
+        fgets(readChars, 255, fd); // ela comeca com o char "#".
 
-        fscanf(fd, "%s", readChars); // Pular essa linha (ela � irrelevante)
+        fscanf(fd, "%s", readChars); // Pular essa linha (ela eh irrelevante)
     }
-    sscanf(readChars, "%d", &pPgm->w); // para preencher os campos da struct � importante manter a
-    fscanf(fd, "%d", &pPgm->h);        // mesma ordem da defini��o desses campos.
+    sscanf(readChars, "%d", &pPgm->w); // para preencher os campos da struct eh importante manter a
+    fscanf(fd, "%d", &pPgm->h);        // mesma ordem da definicao desses campos.
     fscanf(fd, "%d", &pPgm->max);
 
     unsigned int Totalpixels = (pPgm->w) * (pPgm->h);
@@ -94,20 +94,20 @@ int ReadPGMP2(const char *arq, pgm *pPgm)
     printf("\n ... Total de Pixels = %d", Totalpixels);
     // printf("\n ... Criar estrutura para alocar valores de brilho de cada pixel.");
 
-    pPgm->pData = (Tpixel *)malloc(sizeof(Tpixel) * (Totalpixels)); // pData � um vetor alocado dinamicamente
-    // ler cada o valor de brilho de cada pixel do arquivo da imagem e armazen�-lo corretamente no
-    // suporte do reticulado (matriz) da imagem, o qual � um vetor criado dinamicamente.
+    pPgm->pData = (Tpixel *)malloc(sizeof(Tpixel) * (Totalpixels)); // pData eh um vetor alocado dinamicamente
+    // ler cada o valor de brilho de cada pixel do arquivo da imagem e armazena-lo corretamente no
+    // suporte do reticulado (matriz) da imagem, o qual eh um vetor criado dinamicamente.
 
     for (nRead = 0; nRead < Totalpixels; nRead++)
     {
-        fscanf(fd, "%d", &word);   // l� o valor de brilho de um pixel do arquivo
+        fscanf(fd, "%d", &word);   // le o valor de brilho de um pixel do arquivo
         pPgm->pData[nRead] = word; // armazena o valor deste pixel no vetor alocado
     } // for
 
-    fclose(fd); // sempre fechar o arquivo se n�o � o mesmo n�o � mais necess�rio
+    fclose(fd); // sempre fechar o arquivo se nao eh o mesmo nao eh mais necessario
 
-    return 0; // retorne os dados de imagem no nome da fun��o
-} // ReadPGMP2 - fim da fun��o
+    return 0; // retorne os dados de imagem no nome da funcao
+} // ReadPGMP2 - fim da funcao
 
 int MemImgZero(pgm *atual, pgm *zeropgm)
 {
@@ -123,8 +123,8 @@ int MemImgZero(pgm *atual, pgm *zeropgm)
 
     unsigned int tp, Totalpixels = (zeropgm->w) * (zeropgm->h);
 
-    zeropgm->pData = (Tpixel *)malloc(sizeof(Tpixel) * (Totalpixels)); // pData � um vetor alocado dinamicamente.
-    // pData eh o suporte do reticulado (matriz) da imagem, o qual � um vetor criado dinamicamente.
+    zeropgm->pData = (Tpixel *)malloc(sizeof(Tpixel) * (Totalpixels)); // pData eh um vetor alocado dinamicamente.
+    // pData eh o suporte do reticulado (matriz) da imagem, o qual eh um vetor criado dinamicamente.
     if (!(zeropgm->pData))
     {
         printf("ERRO na alocacao de matriz de zeros.");
@@ -227,7 +227,7 @@ int main()
     /// descritor para o buffer de arquivo em memoria RAM (resultados
     FILE *fnirUmu;
 
-    /// descritor para os dados da imagem na mem�ria principal
+    /// descritor para os dados da imagem na memoria principal
     pgm *nirUmuPgm, *imggrad;
 
     nirUmuPgm = malloc(sizeof(pgm)); /// alocacao do descritor dos dados da imagem
@@ -237,8 +237,8 @@ int main()
     MorphGrad33(nirUmuPgm, imggrad);
 
     WritePGM(arqgradUmu, "P2", imggrad);
-    /// a libera��o da mem�ria alocada dinamicamente (em C)
-    /// esse procedimento � responsabilidade do programador.
+    /// a liberacao da memoria alocada dinamicamente (em C)
+    /// esse procedimento eh responsabilidade do programador.
     free(nirUmuPgm->pData);
     free(nirUmuPgm);
     free(imggrad->pData);
