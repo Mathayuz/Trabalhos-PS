@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h> // para usar a funcao strcmp() que compara duas strings
 #include <stdlib.h> // para usar a funcao exit() que interrompe (aborta) a execucao do programa.
